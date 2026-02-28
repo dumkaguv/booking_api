@@ -1,0 +1,9 @@
+.git
+.github
+.husky
+node_modules
+dist
+coverage
+*.log
+.env
+tsconfig*.tsbuildinfo

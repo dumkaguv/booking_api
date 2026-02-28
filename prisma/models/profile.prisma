@@ -1,0 +1,14 @@
+model Profile {
+  id        Int       @id @default(autoincrement())
+  firstName String    @map("first_name") @db.VarChar(255)
+  lastName  String    @map("last_name") @db.VarChar(255)
+  birthDay  DateTime? @map("birth_day")
+  phone     String?
+  biography String?
+
+  userId Int  @unique @map("user_id")
+  user   User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @default(now()) @updatedAt @map("updated_at")
+}
