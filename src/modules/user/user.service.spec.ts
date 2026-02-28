@@ -1,7 +1,4 @@
-import {
-  BadRequestException,
-  UnauthorizedException
-} from '@nestjs/common'
+import { BadRequestException, UnauthorizedException } from '@nestjs/common'
 import { hashSync } from 'bcrypt'
 
 import { paginate } from '@/common/utils'

@@ -5,7 +5,6 @@ import { JwtService } from '@nestjs/jwt'
 import { UserService } from '@/modules/user/user.service'
 import { PrismaService } from '@/prisma/prisma.service'
 
-
 import { TokenService } from './token.service'
 
 type ConfigMock = {

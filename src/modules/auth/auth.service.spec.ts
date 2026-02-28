@@ -146,7 +146,9 @@ describe('AuthService', () => {
     const req = { cookies: {} } as unknown as Request
     const res = { cookie: jest.fn() } as unknown as Response
 
-    await expect(service.refresh(req, res)).rejects.toThrow(UnauthorizedException)
+    await expect(service.refresh(req, res)).rejects.toThrow(
+      UnauthorizedException
+    )
   })
 
   it('refresh rotates token, sets cookie and returns access token', async () => {

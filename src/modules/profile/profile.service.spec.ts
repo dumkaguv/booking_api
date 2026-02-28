@@ -1,7 +1,6 @@
 import { UserService } from '@/modules/user/user.service'
 import { PrismaService } from '@/prisma/prisma.service'
 
-
 import { ProfileService } from './profile.service'
 
 type PrismaMock = {

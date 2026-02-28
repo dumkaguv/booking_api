@@ -68,7 +68,11 @@ describe('ProfileController', () => {
     const result = await controller.create(req, dto)
 
     expect(service.create).toHaveBeenCalledWith(5, dto)
-    expect(result).toMatchObject({ id: 1, firstName: 'Jane', lastName: 'Smith' })
+    expect(result).toMatchObject({
+      id: 1,
+      firstName: 'Jane',
+      lastName: 'Smith'
+    })
   })
 
   it('update patches current user profile', async () => {

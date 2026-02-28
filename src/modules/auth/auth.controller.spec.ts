@@ -7,7 +7,6 @@ import { AuthService } from './auth.service'
 
 import type { CreateLoginDto } from './dto'
 
-
 import type { Request, Response } from 'express'
 
 type AuthServiceMock = {
