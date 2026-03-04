@@ -334,7 +334,9 @@ export const createBookings = (
       }
 
       if (!unit) {
-        throw new Error(`Unit index "${booking.unitIndex}" not found for booking seed`)
+        throw new Error(
+          `Unit index "${booking.unitIndex}" not found for booking seed`
+        )
       }
 
       if (typeof booking.listingIndex === 'number' && !listing) {

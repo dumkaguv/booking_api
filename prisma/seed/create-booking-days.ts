@@ -17,7 +17,9 @@ const statusesWithBlockedDays = new Set<BookingStatusEnum>([
 ])
 
 const toUtcDate = (value: Date) =>
-  new Date(Date.UTC(value.getUTCFullYear(), value.getUTCMonth(), value.getUTCDate()))
+  new Date(
+    Date.UTC(value.getUTCFullYear(), value.getUTCMonth(), value.getUTCDate())
+  )
 
 const addOneUtcDay = (value: Date) => {
   const result = new Date(value)

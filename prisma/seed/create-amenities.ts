@@ -2,7 +2,10 @@ import { Prisma } from '@prisma/client'
 
 import { prisma } from '../prisma-client'
 
-type SeedAmenity = Pick<Prisma.AmenityCreateManyInput, 'code' | 'name' | 'color'>
+type SeedAmenity = Pick<
+  Prisma.AmenityCreateManyInput,
+  'code' | 'name' | 'color'
+>
 
 const amenities: SeedAmenity[] = [
   { code: 'WIFI', name: 'Wi-Fi', color: '#2563EB' },

@@ -42,7 +42,9 @@ export const createListingUnits = (listings: ListingRef[]) => {
       const listing = listings[unit.listingIndex]
 
       if (!listing) {
-        throw new Error(`Listing index "${unit.listingIndex}" not found for unit seed`)
+        throw new Error(
+          `Listing index "${unit.listingIndex}" not found for unit seed`
+        )
       }
 
       return prisma.listingUnit.create({

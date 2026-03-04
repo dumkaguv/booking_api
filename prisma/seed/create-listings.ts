@@ -94,7 +94,8 @@ const listings: SeedListing[] = [
   {
     ownerUsername: 'daniel',
     title: 'Dacia Business Hotel',
-    description: 'Business-focused hotel with gym, breakfast and airport transfer.',
+    description:
+      'Business-focused hotel with gym, breakfast and airport transfer.',
     status: ListingStatusEnum.PUBLISHED,
     type: ListingTypeEnum.HOTEL,
     country: 'Moldova',
@@ -111,7 +112,8 @@ const listings: SeedListing[] = [
   {
     ownerUsername: 'sophia',
     title: 'Backpack Hostel Hub',
-    description: 'Affordable hostel in downtown with self check-in and workspace.',
+    description:
+      'Affordable hostel in downtown with self check-in and workspace.',
     status: ListingStatusEnum.PUBLISHED,
     type: ListingTypeEnum.HOSTEL,
     country: 'Moldova',
@@ -157,7 +159,13 @@ const listings: SeedListing[] = [
     checkInFrom: new Date('2026-06-01T15:00:00.000Z'),
     checkOutUntil: new Date('2026-06-01T11:00:00.000Z'),
     instantBook: false,
-    amenityCodes: ['WIFI', 'FIREPLACE', 'MOUNTAIN_VIEW', 'PARKING', 'PET_FRIENDLY']
+    amenityCodes: [
+      'WIFI',
+      'FIREPLACE',
+      'MOUNTAIN_VIEW',
+      'PARKING',
+      'PET_FRIENDLY'
+    ]
   },
   {
     ownerUsername: 'alex',
@@ -220,7 +228,9 @@ export const createListings = (users: UserRef[]) => {
       const ownerId = usersByUsername.get(listing.ownerUsername)
 
       if (!ownerId) {
-        throw new Error(`Owner "${listing.ownerUsername}" not found for listing seed`)
+        throw new Error(
+          `Owner "${listing.ownerUsername}" not found for listing seed`
+        )
       }
 
       return prisma.listing.create({
