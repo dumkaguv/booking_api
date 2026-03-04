@@ -73,7 +73,7 @@ export class UserController {
     }
 
     return sendResponse(
-      ResponseUserDto,
+      EmptyResponseDto,
       this.userService.changePassword(+id, oldPassword, newPassword)
     )
   }

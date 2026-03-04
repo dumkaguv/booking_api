@@ -1,3 +1,4 @@
-/* eslint-disable @typescript-eslint/no-extraneous-class */
+import { Exclude } from 'class-transformer'
 
+@Exclude()
 export class EmptyResponseDto {}

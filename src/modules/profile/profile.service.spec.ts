@@ -1,4 +1,3 @@
-import { UserService } from '@/modules/user/user.service'
 import { PrismaService } from '@/prisma/prisma.service'
 
 import { ProfileService } from './profile.service'
@@ -6,56 +5,43 @@ import { ProfileService } from './profile.service'
 type PrismaMock = {
   profile: {
     create: jest.Mock
-    findFirstOrThrow: jest.Mock
+    findFirst: jest.Mock
     update: jest.Mock
   }
-}
-
-type UserServiceMock = {
-  findOne: jest.Mock
 }
 
 describe('ProfileService', () => {
   let prisma: PrismaMock
   let service: ProfileService
-  let userService: UserServiceMock
 
   beforeEach(() => {
     prisma = {
       profile: {
         create: jest.fn(),
-        findFirstOrThrow: jest.fn(),
+        findFirst: jest.fn(),
         update: jest.fn()
       }
     }
 
-    userService = {
-      findOne: jest.fn()
-    }
-
-    service = new ProfileService(
-      prisma as unknown as PrismaService,
-      userService as unknown as UserService
-    )
+    service = new ProfileService(prisma as unknown as PrismaService)
   })
 
-  it('findOne ensures profile exists and returns user with relations', async () => {
-    const user = {
-      id: 7,
-      username: 'john',
-      email: 'john@mail.com'
+  it('findOne returns profile with nested user relations', async () => {
+    const profile = {
+      id: 70,
+      userId: 7,
+      user: { id: 7, username: 'john', email: 'john@mail.com' }
     }
 
-    prisma.profile.findFirstOrThrow.mockResolvedValueOnce({ id: 70, userId: 7 })
-    userService.findOne.mockResolvedValueOnce(user)
+    prisma.profile.findFirst.mockResolvedValueOnce(profile)
 
     const result = await service.findOne(7)
 
-    expect(prisma.profile.findFirstOrThrow).toHaveBeenCalledWith({
+    expect(prisma.profile.findFirst).toHaveBeenCalledWith({
+      include: { user: { include: { profile: true } } },
       where: { userId: 7 }
     })
-    expect(userService.findOne).toHaveBeenCalledWith(7)
-    expect(result).toBe(user)
+    expect(result).toBe(profile)
   })
 
   it('create stores profile bound to user id', async () => {
@@ -76,6 +62,27 @@ describe('ProfileService', () => {
     expect(result).toBe(created)
   })
 
+  it('create normalizes date-only birthDay to Date', async () => {
+    const dto = {
+      firstName: 'John',
+      lastName: 'Doe',
+      birthDay: '2026-03-02'
+    }
+
+    prisma.profile.create.mockResolvedValueOnce({ id: 1, userId: 3, ...dto })
+
+    await service.create(3, dto)
+
+    expect(prisma.profile.create).toHaveBeenCalledWith({
+      data: expect.objectContaining({
+        userId: 3,
+        firstName: 'John',
+        lastName: 'Doe',
+        birthDay: new Date('2026-03-02T00:00:00.000Z')
+      })
+    })
+  })
+
   it('update patches profile by user id', async () => {
     const dto = {
       biography: 'Hi'
@@ -91,5 +98,22 @@ describe('ProfileService', () => {
       where: { userId: 3 }
     })
     expect(result).toBe(updated)
+  })
+
+  it('update normalizes date-only birthDay to Date', async () => {
+    const dto = {
+      birthDay: '2026-03-02'
+    }
+
+    prisma.profile.update.mockResolvedValueOnce({ id: 9, userId: 3 })
+
+    await service.update(3, dto)
+
+    expect(prisma.profile.update).toHaveBeenCalledWith({
+      data: {
+        birthDay: new Date('2026-03-02T00:00:00.000Z')
+      },
+      where: { userId: 3 }
+    })
   })
 })

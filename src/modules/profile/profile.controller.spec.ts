@@ -1,5 +1,7 @@
 import type { AuthRequest } from '@/common/types'
+import { ResponseUserNoProfileDto } from '@/modules/user/dto'
 
+import { ResponseProfileDto } from './dto'
 import { ProfileController } from './profile.controller'
 import { ProfileService } from './profile.service'
 
@@ -46,6 +48,8 @@ describe('ProfileController', () => {
       firstName: 'John',
       user: { id: 11, username: 'john', email: 'john@mail.com' }
     })
+    expect(result).toBeInstanceOf(ResponseProfileDto)
+    expect(result.user).toBeInstanceOf(ResponseUserNoProfileDto)
     expect(
       (result.user as unknown as Record<string, unknown>).password
     ).toBeUndefined()
@@ -62,17 +66,25 @@ describe('ProfileController', () => {
     service.create.mockResolvedValueOnce({
       id: 1,
       userId: 5,
+      internalSecret: 'hidden',
       ...dto
     })
 
     const result = await controller.create(req, dto)
 
     expect(service.create).toHaveBeenCalledWith(5, dto)
+    expect(result).toBeInstanceOf(ResponseProfileDto)
     expect(result).toMatchObject({
       id: 1,
       firstName: 'Jane',
       lastName: 'Smith'
     })
+    expect(
+      (result as unknown as Record<string, unknown>).userId
+    ).toBeUndefined()
+    expect(
+      (result as unknown as Record<string, unknown>).internalSecret
+    ).toBeUndefined()
   })
 
   it('update patches current user profile', async () => {
@@ -84,12 +96,20 @@ describe('ProfileController', () => {
     service.update.mockResolvedValueOnce({
       id: 2,
       userId: 5,
+      internalSecret: 'hidden',
       ...dto
     })
 
     const result = await controller.update(req, dto)
 
     expect(service.update).toHaveBeenCalledWith(5, dto)
+    expect(result).toBeInstanceOf(ResponseProfileDto)
     expect(result).toMatchObject({ id: 2, biography: 'Updated bio' })
+    expect(
+      (result as unknown as Record<string, unknown>).userId
+    ).toBeUndefined()
+    expect(
+      (result as unknown as Record<string, unknown>).internalSecret
+    ).toBeUndefined()
   })
 })

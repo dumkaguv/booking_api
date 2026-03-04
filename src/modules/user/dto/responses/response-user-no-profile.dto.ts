@@ -1,10 +1,8 @@
 import { ApiProperty } from '@nestjs/swagger'
-import { Exclude, Expose, Type } from 'class-transformer'
-
-import { ResponseProfileNoUserDto } from '@/modules/profile/dto/responses/response-profile-no-user.dto'
+import { Exclude, Expose } from 'class-transformer'
 
 @Exclude()
-export class ResponseUserDto {
+export class ResponseUserNoProfileDto {
   @ApiProperty({ type: 'integer', readOnly: true })
   @Expose()
   readonly id: number
@@ -16,16 +14,6 @@ export class ResponseUserDto {
   @ApiProperty({ type: 'string' })
   @Expose()
   email: string
-
-  @ApiProperty({
-    type: () => ResponseProfileNoUserDto,
-    required: false,
-    readOnly: true,
-    nullable: true
-  })
-  @Type(() => ResponseProfileNoUserDto)
-  @Expose()
-  readonly profile?: ResponseProfileNoUserDto | null
 
   @ApiProperty({
     type: 'string',

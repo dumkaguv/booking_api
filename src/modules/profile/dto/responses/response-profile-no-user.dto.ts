@@ -1,10 +1,8 @@
 import { ApiProperty } from '@nestjs/swagger'
-import { Exclude, Expose, Type } from 'class-transformer'
-
-import { ResponseUserNoProfileDto } from '@/modules/user/dto'
+import { Exclude, Expose } from 'class-transformer'
 
 @Exclude()
-export class ResponseProfileDto {
+export class ResponseProfileNoUserDto {
   @ApiProperty({ type: 'integer', readOnly: true })
   @Expose()
   readonly id: number
@@ -16,11 +14,6 @@ export class ResponseProfileDto {
   @ApiProperty({ type: 'string', required: false, nullable: true })
   @Expose()
   lastName?: string | null
-
-  @ApiProperty({ type: () => ResponseUserNoProfileDto })
-  @Type(() => ResponseUserNoProfileDto)
-  @Expose()
-  user: ResponseUserNoProfileDto
 
   @ApiProperty({
     type: 'string',
