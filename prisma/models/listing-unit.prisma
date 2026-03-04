@@ -1,0 +1,17 @@
+model ListingUnit {
+  id Int @id @default(autoincrement())
+
+  name     String  @db.VarChar(255)
+  capacity Int
+  isActive Boolean @map("is_active")
+
+  listingId Int     @map("listing_id")
+  listing   Listing @relation(fields: [listingId], references: [id], onDelete: Cascade)
+
+  unitCalendarDays UnitCalendarDay[]
+  bookings         Booking[]
+  bookingDays      BookingDay[]
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @default(now()) @updatedAt @map("updated_at")
+}

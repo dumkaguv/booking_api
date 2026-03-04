@@ -49,6 +49,46 @@ const users: SeedUser[] = [
     isActivated: false,
     activationLink: 'activation-ivan-2026',
     activatedAt: null
+  },
+  {
+    username: 'olga',
+    email: 'olga@example.com',
+    password: hashedPassword,
+    isActivated: true,
+    activationLink: null,
+    activatedAt: new Date('2026-01-13T09:00:00.000Z')
+  },
+  {
+    username: 'daniel',
+    email: 'daniel@example.com',
+    password: hashedPassword,
+    isActivated: true,
+    activationLink: null,
+    activatedAt: new Date('2026-01-14T09:00:00.000Z')
+  },
+  {
+    username: 'sophia',
+    email: 'sophia@example.com',
+    password: hashedPassword,
+    isActivated: false,
+    activationLink: 'activation-sophia-2026',
+    activatedAt: null
+  },
+  {
+    username: 'nikita',
+    email: 'nikita@example.com',
+    password: hashedPassword,
+    isActivated: true,
+    activationLink: null,
+    activatedAt: new Date('2026-01-15T09:00:00.000Z')
+  },
+  {
+    username: 'emma',
+    email: 'emma@example.com',
+    password: hashedPassword,
+    isActivated: true,
+    activationLink: null,
+    activatedAt: new Date('2026-01-16T09:00:00.000Z')
   }
 ]
 

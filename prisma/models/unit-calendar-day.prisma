@@ -1,0 +1,24 @@
+model UnitCalendarDay {
+  id Int @id @default(autoincrement())
+
+  unitId Int         @map("unit_id")
+  unit   ListingUnit @relation(fields: [unitId], references: [id], onDelete: Cascade)
+
+  date  DateTime                 @db.Date
+  state UnitCalendarDayStateEnum @default(AVAILABLE)
+
+  priceOverride Decimal? @map("price_override")
+  minNights     Int?     @map("min_nights")
+  note          String?
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @default(now()) @updatedAt @map("updated_at")
+
+  @@unique([unitId, date])
+  @@index([date])
+}
+
+enum UnitCalendarDayStateEnum {
+  AVAILABLE
+  BLOCKED
+}

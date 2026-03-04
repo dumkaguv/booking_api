@@ -42,10 +42,49 @@ const profiles: SeedProfile[] = [
     birthDay: new Date('1991-04-18'),
     phone: '+37360000005',
     biography: 'DevOps and automation specialist'
+  },
+  {
+    firstName: 'Olga',
+    lastName: 'Sava',
+    birthDay: new Date('1994-03-10'),
+    phone: '+37360000006',
+    biography: 'Travel blogger and host'
+  },
+  {
+    firstName: 'Daniel',
+    lastName: 'Muntean',
+    birthDay: new Date('1990-06-22'),
+    phone: '+37360000007',
+    biography: 'Sales manager and mountain lover'
+  },
+  {
+    firstName: 'Sophia',
+    lastName: 'Ionescu',
+    birthDay: new Date('1999-01-15'),
+    phone: '+37360000008',
+    biography: 'UI designer, remote worker'
+  },
+  {
+    firstName: 'Nikita',
+    lastName: 'Petrov',
+    birthDay: new Date('1992-11-09'),
+    phone: '+37360000009',
+    biography: 'Data analyst and weekend traveler'
+  },
+  {
+    firstName: 'Emma',
+    lastName: 'Hart',
+    birthDay: new Date('1996-05-30'),
+    phone: '+37360000010',
+    biography: 'Photographer exploring Eastern Europe'
   }
 ]
 
 export const createProfiles = async (userIds: number[]) => {
+  if (userIds.length > profiles.length) {
+    throw new Error('Not enough profile seed records for all users')
+  }
+
   await prisma.profile.createMany({
     data: userIds.map((userId, index) => ({
       userId,

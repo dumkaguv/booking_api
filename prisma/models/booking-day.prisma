@@ -1,0 +1,15 @@
+model BookingDay {
+  id Int @id @default(autoincrement())
+
+  bookingId Int     @map("booking_id")
+  booking   Booking @relation(fields: [bookingId], references: [id], onDelete: Cascade)
+
+  unitId Int         @map("unit_id")
+  unit   ListingUnit @relation(fields: [unitId], references: [id], onDelete: Cascade)
+
+  date DateTime @db.Date
+
+  @@unique([unitId, date])
+  @@index([bookingId])
+  @@index([date])
+}

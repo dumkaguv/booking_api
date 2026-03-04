@@ -13,8 +13,11 @@ model User {
   roleId Int   @map("role_id")
   role   Role? @relation(fields: [roleId], references: [id], onDelete: Restrict)
 
-  token   Token?
-  profile Profile?
+  token    Token?
+  profile  Profile?
+  listings Listing[]
+  bookings Booking[]
+  reviews  Review[]
 
   @@unique([username, email])
   @@index([roleId])
