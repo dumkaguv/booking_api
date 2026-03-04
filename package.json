@@ -25,6 +25,7 @@
     "prisma:push": "prisma db push && prettier --write \"prisma/**/*.ts\"",
     "prisma:push-force": "prisma db push --force-reset && prettier --write \"prisma/**/*.ts\"",
     "prisma:migrate": "prisma migrate dev",
+    "prisma:migrate:create": "prisma migrate dev --create-only",
     "prisma:migrate-reset": "prisma migrate reset",
     "prisma:studio": "prisma studio",
     "prisma:seed": "prisma db seed",

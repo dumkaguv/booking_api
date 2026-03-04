@@ -1,9 +1,9 @@
-import { Prisma } from '@prisma/client'
+import { Prisma, RolesEnum } from '@prisma/client'
 import { hashSync } from 'bcrypt'
 
 import { prisma } from '../prisma-client'
 
-type SeedUser = Prisma.UserCreateInput
+type SeedUser = Omit<Prisma.UserCreateInput, 'role'> & { role?: RolesEnum }
 
 const defaultPassword = '11111'
 const hashedPassword = hashSync(defaultPassword, 10)
@@ -15,7 +15,8 @@ const users: SeedUser[] = [
     password: hashedPassword,
     isActivated: true,
     activationLink: null,
-    activatedAt: new Date('2026-01-10T09:00:00.000Z')
+    activatedAt: new Date('2026-01-10T09:00:00.000Z'),
+    role: RolesEnum.ADMIN
   },
   {
     username: 'maria',
@@ -53,6 +54,13 @@ const users: SeedUser[] = [
 
 export const createUsers = () => {
   return prisma.$transaction(
-    users.map((user) => prisma.user.create({ data: user }))
+    users.map(({ role, ...user }) =>
+      prisma.user.create({
+        data: {
+          ...user,
+          role: { connect: { code: role ?? RolesEnum.USER } }
+        }
+      })
+    )
   )
 }

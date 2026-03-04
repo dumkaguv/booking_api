@@ -1,12 +1,15 @@
 import { prisma } from '../prisma-client'
 
 import { createProfiles } from './create-profiles'
+import { createRoles } from './create-roles'
 import { createTokens } from './create-tokens'
 import { createUsers } from './create-users'
 
 const up = async () => {
+  await createRoles()
+
   const createdUsers = await createUsers()
-  const userIds = createdUsers.map((user) => user.id)
+  const userIds = createdUsers.map(({ id }) => id)
 
   await createProfiles(userIds)
   await createTokens(userIds)
@@ -32,6 +35,7 @@ const main = async () => {
     await up()
   } catch (error) {
     console.error(error)
+    throw error
   }
 }
 
