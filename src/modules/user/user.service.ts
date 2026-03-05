@@ -3,6 +3,7 @@ import {
   Injectable,
   UnauthorizedException
 } from '@nestjs/common'
+import { RolesEnum } from '@prisma/client'
 import { compareSync, hashSync } from 'bcrypt'
 
 import { FindAllQueryDto } from '@/common/dtos'
@@ -54,7 +55,13 @@ export class UsersService {
       data: {
         username,
         email,
-        password: hashPassword
+        password: hashPassword,
+        role: {
+          connectOrCreate: {
+            where: { code: RolesEnum.USER },
+            create: { code: RolesEnum.USER }
+          }
+        }
       },
       include: includeUserWithRelations
     })

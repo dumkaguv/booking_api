@@ -10,7 +10,7 @@ model User {
   updatedAt   DateTime  @default(now()) @updatedAt @map("updated_at")
   activatedAt DateTime? @map("activated_at")
 
-  roleId Int   @map("role_id")
+  roleId Int?  @map("role_id")
   role   Role? @relation(fields: [roleId], references: [id], onDelete: Restrict)
 
   token    Token?

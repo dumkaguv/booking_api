@@ -1,4 +1,5 @@
 import { BadRequestException, UnauthorizedException } from '@nestjs/common'
+import { RolesEnum } from '@prisma/client'
 import { hashSync } from 'bcrypt'
 
 import { paginate } from '@/common/utils'
@@ -118,7 +119,13 @@ describe('UsersService', () => {
       data: {
         email: dto.email,
         username: dto.username,
-        password: expect.any(String)
+        password: expect.any(String),
+        role: {
+          connectOrCreate: {
+            where: { code: RolesEnum.USER },
+            create: { code: RolesEnum.USER }
+          }
+        }
       },
       include: includeUserWithRelations
     })
