@@ -3,10 +3,10 @@ import { ConfigService } from '@nestjs/config'
 import ms, { type StringValue } from 'ms'
 
 import { isDev } from '@/common/utils'
-import { TokenService } from '@/modules/token/token.service'
+import { TokensService } from '@/modules/token/token.service'
 
 import { CreateUserDto } from '@/modules/user/dto'
-import { UserService } from '@/modules/user/user.service'
+import { UsersService } from '@/modules/user/user.service'
 
 import { CreateLoginDto } from './dto'
 
@@ -20,8 +20,8 @@ export class AuthService {
 
   constructor(
     private readonly configService: ConfigService,
-    private readonly userService: UserService,
-    private readonly tokenService: TokenService
+    private readonly userService: UsersService,
+    private readonly tokenService: TokensService
   ) {
     this.JWT_REFRESH_TTL = configService.getOrThrow<string>(
       'JWT_REFRESH_TOKEN_TTL'

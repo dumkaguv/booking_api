@@ -6,14 +6,21 @@ import { PrismaService } from '@/prisma/prisma.service'
 import { CreateProfileDto, UpdateProfileDto } from './dto'
 import { includeUserWithRelations } from '../user/constants'
 
+const includeProfileWithRelations = {
+  avatarFile: true,
+  user: {
+    include: includeUserWithRelations
+  }
+} as const
+
 @Injectable()
-export class ProfileService {
+export class ProfilesService {
   constructor(private readonly prisma: PrismaService) {}
 
   public findOne(userId: number) {
     return this.prisma.profile.findFirst({
       where: { userId },
-      include: { user: { include: includeUserWithRelations } }
+      include: includeProfileWithRelations
     })
   }
 
@@ -22,7 +29,8 @@ export class ProfileService {
     const data = birthDay === undefined ? dto : { ...dto, birthDay }
 
     return this.prisma.profile.create({
-      data: { userId, ...data }
+      data: { userId, ...data },
+      include: includeProfileWithRelations
     })
   }
 
@@ -32,7 +40,8 @@ export class ProfileService {
 
     return this.prisma.profile.update({
       data,
-      where: { userId }
+      where: { userId },
+      include: includeProfileWithRelations
     })
   }
 }

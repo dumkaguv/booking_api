@@ -1,0 +1,51 @@
+model File {
+  id       Int     @id @default(autoincrement())
+  publicId String  @map("public_id")
+  url      String
+  type     String? @db.VarChar(50)
+
+  userId Int  @map("user_id")
+  user   User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  profileAvatar Profile?      @relation("ProfileAvatar")
+  listingFiles  ListingFile[]
+  reviewFiles   ReviewFile[]
+
+  uploadedAt DateTime @default(now()) @map("uploaded_at")
+
+  @@index([userId])
+}
+
+model ListingFile {
+  id Int @id @default(autoincrement())
+
+  listingId Int     @map("listing_id")
+  listing   Listing @relation(fields: [listingId], references: [id], onDelete: Cascade)
+
+  fileId Int  @map("file_id")
+  file   File @relation(fields: [fileId], references: [id], onDelete: Cascade)
+
+  order Int? @map("order_index")
+
+  createdAt DateTime @default(now()) @map("created_at")
+
+  @@unique([listingId, fileId])
+  @@index([fileId])
+  @@index([listingId])
+}
+
+model ReviewFile {
+  id Int @id @default(autoincrement())
+
+  reviewId Int    @map("review_id")
+  review   Review @relation(fields: [reviewId], references: [id], onDelete: Cascade)
+
+  fileId Int  @map("file_id")
+  file   File @relation(fields: [fileId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now()) @map("created_at")
+
+  @@unique([reviewId, fileId])
+  @@index([fileId])
+  @@index([reviewId])
+}

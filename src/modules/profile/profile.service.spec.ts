@@ -1,6 +1,6 @@
 import { PrismaService } from '@/prisma/prisma.service'
 
-import { ProfileService } from './profile.service'
+import { ProfilesService } from './profile.service'
 
 type PrismaMock = {
   profile: {
@@ -10,9 +10,9 @@ type PrismaMock = {
   }
 }
 
-describe('ProfileService', () => {
+describe('ProfilesService', () => {
   let prisma: PrismaMock
-  let service: ProfileService
+  let service: ProfilesService
 
   beforeEach(() => {
     prisma = {
@@ -23,7 +23,7 @@ describe('ProfileService', () => {
       }
     }
 
-    service = new ProfileService(prisma as unknown as PrismaService)
+    service = new ProfilesService(prisma as unknown as PrismaService)
   })
 
   it('findOne returns profile with nested user relations', async () => {
@@ -38,7 +38,18 @@ describe('ProfileService', () => {
     const result = await service.findOne(7)
 
     expect(prisma.profile.findFirst).toHaveBeenCalledWith({
-      include: { user: { include: { profile: true } } },
+      include: {
+        avatarFile: true,
+        user: {
+          include: {
+            profile: {
+              include: {
+                avatarFile: true
+              }
+            }
+          }
+        }
+      },
       where: { userId: 7 }
     })
     expect(result).toBe(profile)
@@ -57,7 +68,19 @@ describe('ProfileService', () => {
     const result = await service.create(3, dto)
 
     expect(prisma.profile.create).toHaveBeenCalledWith({
-      data: { userId: 3, ...dto }
+      data: { userId: 3, ...dto },
+      include: {
+        avatarFile: true,
+        user: {
+          include: {
+            profile: {
+              include: {
+                avatarFile: true
+              }
+            }
+          }
+        }
+      }
     })
     expect(result).toBe(created)
   })
@@ -79,7 +102,19 @@ describe('ProfileService', () => {
         firstName: 'John',
         lastName: 'Doe',
         birthDay: new Date('2026-03-02T00:00:00.000Z')
-      })
+      }),
+      include: {
+        avatarFile: true,
+        user: {
+          include: {
+            profile: {
+              include: {
+                avatarFile: true
+              }
+            }
+          }
+        }
+      }
     })
   })
 
@@ -95,7 +130,19 @@ describe('ProfileService', () => {
 
     expect(prisma.profile.update).toHaveBeenCalledWith({
       data: dto,
-      where: { userId: 3 }
+      where: { userId: 3 },
+      include: {
+        avatarFile: true,
+        user: {
+          include: {
+            profile: {
+              include: {
+                avatarFile: true
+              }
+            }
+          }
+        }
+      }
     })
     expect(result).toBe(updated)
   })
@@ -113,7 +160,19 @@ describe('ProfileService', () => {
       data: {
         birthDay: new Date('2026-03-02T00:00:00.000Z')
       },
-      where: { userId: 3 }
+      where: { userId: 3 },
+      include: {
+        avatarFile: true,
+        user: {
+          include: {
+            profile: {
+              include: {
+                avatarFile: true
+              }
+            }
+          }
+        }
+      }
     })
   })
 })

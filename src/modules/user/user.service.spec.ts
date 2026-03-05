@@ -5,7 +5,7 @@ import { paginate } from '@/common/utils'
 import { PrismaService } from '@/prisma/prisma.service'
 
 import { includeUserWithRelations } from './constants'
-import { UserService } from './user.service'
+import { UsersService } from './user.service'
 
 jest.mock('@/common/utils', () => ({
   paginate: jest.fn()
@@ -24,9 +24,9 @@ type PrismaMock = {
   user: UserModelMock
 }
 
-describe('UserService', () => {
+describe('UsersService', () => {
   let prisma: PrismaMock
-  let service: UserService
+  let service: UsersService
   let paginateMock: jest.MockedFunction<typeof paginate>
 
   beforeEach(() => {
@@ -41,14 +41,14 @@ describe('UserService', () => {
       }
     }
 
-    service = new UserService(prisma as unknown as PrismaService)
+    service = new UsersService(prisma as unknown as PrismaService)
     paginateMock = paginate as jest.MockedFunction<typeof paginate>
     paginateMock.mockReset()
   })
 
   it('findAll delegates to paginate with user model defaults', async () => {
     const expected = { data: [], total: 0 }
-    const query: Parameters<UserService['findAll']>[0] = {
+    const query: Parameters<UsersService['findAll']>[0] = {
       ordering: '-id',
       page: 2,
       pageSize: 5,

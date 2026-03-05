@@ -9,13 +9,13 @@ import { Authorization } from '@/modules/auth/decorators'
 
 import { CreateProfileDto, ResponseProfileDto, UpdateProfileDto } from './dto'
 
-import { ProfileService } from './profile.service'
+import { ProfilesService } from './profile.service'
 
-@Controller('profile')
+@Controller('profiles')
 @Authorization()
-@ApiTags('Profile')
-export class ProfileController {
-  constructor(private readonly profileService: ProfileService) {}
+@ApiTags('Profiles')
+export class ProfilesController {
+  constructor(private readonly profileService: ProfilesService) {}
 
   @Get('me')
   @ApiOkResponseWrapped(ResponseProfileDto)

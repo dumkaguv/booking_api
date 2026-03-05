@@ -8,9 +8,10 @@ import { AllExceptionsFilter } from '@/common/filters'
 import { ResponseInterceptor } from '@/common/interceptors'
 
 import { AuthModule } from '@/modules/auth/auth.module'
-import { ProfileModule } from '@/modules/profile/profile.module'
-import { TokenModule } from '@/modules/token/token.module'
-import { UserModule } from '@/modules/user/user.module'
+import { ProfilesModule } from '@/modules/profile/profile.module'
+import { TokensModule } from '@/modules/token/token.module'
+import { UploadsModule } from '@/modules/upload/upload.module'
+import { UsersModule } from '@/modules/user/user.module'
 import { PrismaModule } from '@/prisma/prisma.module'
 
 import { AppController } from './app.controller'
@@ -29,9 +30,10 @@ import { AppController } from './app.controller'
       }
     ]),
     AuthModule,
-    TokenModule,
-    UserModule,
-    ProfileModule
+    TokensModule,
+    UsersModule,
+    ProfilesModule,
+    UploadsModule
   ],
   controllers: [AppController],
   providers: [

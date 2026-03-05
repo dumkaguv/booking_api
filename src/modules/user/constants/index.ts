@@ -1,5 +1,9 @@
 import { Prisma } from '@prisma/client'
 
 export const includeUserWithRelations: Prisma.UserInclude = {
-  profile: true
+  profile: {
+    include: {
+      avatarFile: true
+    }
+  }
 } as const

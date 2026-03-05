@@ -4,4 +4,4 @@ import { ApiExcludeController } from '@nestjs/swagger'
 
 @Controller('tokens')
 @ApiExcludeController()
-export class TokenController {}
+export class TokensController {}

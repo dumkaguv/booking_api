@@ -1,5 +1,7 @@
 import { ApiProperty } from '@nestjs/swagger'
-import { Exclude, Expose } from 'class-transformer'
+import { Exclude, Expose, Type } from 'class-transformer'
+
+import { ResponseFileDto } from '@/modules/file/dto'
 
 @Exclude()
 export class ResponseProfileNoUserDto {
@@ -31,6 +33,15 @@ export class ResponseProfileNoUserDto {
   @ApiProperty({ type: 'string', nullable: true, required: false })
   @Expose()
   biography?: string | null
+
+  @ApiProperty({
+    type: () => ResponseFileDto,
+    required: false,
+    nullable: true
+  })
+  @Type(() => ResponseFileDto)
+  @Expose()
+  avatarFile?: ResponseFileDto | null
 
   @ApiProperty({
     type: 'string',

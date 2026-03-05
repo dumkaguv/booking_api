@@ -24,13 +24,13 @@ import { Authorization } from '@/modules/auth/decorators'
 
 import { CreateChangePasswordDto, ResponseUserDto, UpdateUserDto } from './dto'
 
-import { UserService } from './user.service'
+import { UsersService } from './user.service'
 
 @Controller('users')
 @Authorization()
 @ApiTags('Users')
-export class UserController {
-  constructor(private readonly userService: UserService) {}
+export class UsersController {
+  constructor(private readonly userService: UsersService) {}
 
   @Get()
   @ApiPaginated(ResponseUserDto)

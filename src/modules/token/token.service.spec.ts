@@ -2,10 +2,10 @@ import { UnauthorizedException } from '@nestjs/common'
 import { ConfigService } from '@nestjs/config'
 import { JwtService } from '@nestjs/jwt'
 
-import { UserService } from '@/modules/user/user.service'
+import { UsersService } from '@/modules/user/user.service'
 import { PrismaService } from '@/prisma/prisma.service'
 
-import { TokenService } from './token.service'
+import { TokensService } from './token.service'
 
 type ConfigMock = {
   getOrThrow: jest.Mock
@@ -43,11 +43,11 @@ function createConfigMock() {
   } as ConfigMock
 }
 
-describe('TokenService', () => {
+describe('TokensService', () => {
   let configService: ConfigMock
   let jwtService: JwtServiceMock
   let prisma: PrismaMock
-  let service: TokenService
+  let service: TokensService
   let userService: UserServiceMock
 
   beforeEach(() => {
@@ -69,11 +69,11 @@ describe('TokenService', () => {
       findOne: jest.fn()
     }
 
-    service = new TokenService(
+    service = new TokensService(
       prisma as unknown as PrismaService,
       configService as unknown as ConfigService,
       jwtService as unknown as JwtService,
-      userService as unknown as UserService
+      userService as unknown as UsersService
     )
   })
 

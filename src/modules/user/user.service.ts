@@ -14,7 +14,7 @@ import { includeUserWithRelations } from './constants'
 import { CreateUserDto, ResponseUserDto, UpdateUserDto } from './dto'
 
 @Injectable()
-export class UserService {
+export class UsersService {
   constructor(private readonly prisma: PrismaService) {}
 
   public findAll(query: FindAllQueryDto<ResponseUserDto>) {

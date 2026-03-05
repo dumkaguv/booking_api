@@ -5,11 +5,11 @@ import { ConfigService } from '@nestjs/config'
 import { JwtService } from '@nestjs/jwt'
 
 import { JwtPayload } from '@/common/types'
-import { UserService } from '@/modules/user/user.service'
+import { UsersService } from '@/modules/user/user.service'
 import { PrismaService } from '@/prisma/prisma.service'
 
 @Injectable()
-export class TokenService {
+export class TokensService {
   private readonly JWT_REFRESH_SECRET: string
   private readonly JWT_ACCESS_SECRET: string
   private readonly JWT_REFRESH_TTL: string
@@ -19,7 +19,7 @@ export class TokenService {
     private readonly prisma: PrismaService,
     private readonly configService: ConfigService,
     private readonly jwtService: JwtService,
-    private readonly userService: UserService
+    private readonly userService: UsersService
   ) {
     this.JWT_REFRESH_SECRET =
       configService.getOrThrow<string>('JWT_REFRESH_SECRET')

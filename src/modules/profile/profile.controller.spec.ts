@@ -2,8 +2,8 @@ import type { AuthRequest } from '@/common/types'
 import { ResponseUserNoProfileDto } from '@/modules/user/dto'
 
 import { ResponseProfileDto } from './dto'
-import { ProfileController } from './profile.controller'
-import { ProfileService } from './profile.service'
+import { ProfilesController } from './profile.controller'
+import { ProfilesService } from './profile.service'
 
 type ProfileServiceMock = {
   create: jest.Mock
@@ -11,8 +11,8 @@ type ProfileServiceMock = {
   update: jest.Mock
 }
 
-describe('ProfileController', () => {
-  let controller: ProfileController
+describe('ProfilesController', () => {
+  let controller: ProfilesController
   let service: ProfileServiceMock
 
   beforeEach(() => {
@@ -22,7 +22,7 @@ describe('ProfileController', () => {
       update: jest.fn()
     }
 
-    controller = new ProfileController(service as unknown as ProfileService)
+    controller = new ProfilesController(service as unknown as ProfilesService)
   })
 
   it('me returns current user profile', async () => {

@@ -4,8 +4,8 @@ import { EmptyResponseDto } from '@/common/dtos/empty-response.dto'
 import type { AuthRequest } from '@/common/types'
 import { ResponseUserDto } from '@/modules/user/dto'
 
-import { UserController } from './user.controller'
-import { UserService } from './user.service'
+import { UsersController } from './user.controller'
+import { UsersService } from './user.service'
 
 type UserServiceMock = {
   changePassword: jest.Mock
@@ -15,8 +15,8 @@ type UserServiceMock = {
   update: jest.Mock
 }
 
-describe('UserController', () => {
-  let controller: UserController
+describe('UsersController', () => {
+  let controller: UsersController
   let service: UserServiceMock
 
   beforeEach(() => {
@@ -28,7 +28,7 @@ describe('UserController', () => {
       update: jest.fn()
     }
 
-    controller = new UserController(service as unknown as UserService)
+    controller = new UsersController(service as unknown as UsersService)
   })
 
   it('findAll forwards query and wraps paginated response', async () => {

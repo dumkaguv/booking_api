@@ -2,15 +2,15 @@ import { forwardRef, Module } from '@nestjs/common'
 
 import { AuthModule } from '@/modules/auth/auth.module'
 
-import { UserModule } from '@/modules/user/user.module'
+import { UsersModule } from '@/modules/user/user.module'
 
-import { TokenController } from './token.controller'
-import { TokenService } from './token.service'
+import { TokensController } from './token.controller'
+import { TokensService } from './token.service'
 
 @Module({
-  imports: [forwardRef(() => AuthModule), UserModule],
-  controllers: [TokenController],
-  providers: [TokenService],
-  exports: [TokenService]
+  imports: [forwardRef(() => AuthModule), UsersModule],
+  controllers: [TokensController],
+  providers: [TokensService],
+  exports: [TokensService]
 })
-export class TokenModule {}
+export class TokensModule {}

@@ -15,6 +15,7 @@ model User {
 
   token    Token?
   profile  Profile?
+  files    File[]
   listings Listing[]
   bookings Booking[]
   reviews  Review[]

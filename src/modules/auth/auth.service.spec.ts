@@ -1,9 +1,9 @@
 import { UnauthorizedException } from '@nestjs/common'
 import { ConfigService } from '@nestjs/config'
 
-import { TokenService } from '@/modules/token/token.service'
+import { TokensService } from '@/modules/token/token.service'
 import type { CreateUserDto } from '@/modules/user/dto'
-import { UserService } from '@/modules/user/user.service'
+import { UsersService } from '@/modules/user/user.service'
 
 import { AuthService } from './auth.service'
 
@@ -61,8 +61,8 @@ describe('AuthService', () => {
 
     service = new AuthService(
       configService as unknown as ConfigService,
-      userService as unknown as UserService,
-      tokenService as unknown as TokenService
+      userService as unknown as UsersService,
+      tokenService as unknown as TokensService
     )
   })
 
@@ -190,8 +190,8 @@ describe('AuthService', () => {
     configService = createConfigMock('production')
     service = new AuthService(
       configService as unknown as ConfigService,
-      userService as unknown as UserService,
-      tokenService as unknown as TokenService
+      userService as unknown as UsersService,
+      tokenService as unknown as TokensService
     )
     const res = { cookie: jest.fn() } as unknown as Response
     const user = { id: 9, username: 'john', email: 'john@mail.com' }

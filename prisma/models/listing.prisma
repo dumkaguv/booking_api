@@ -24,6 +24,7 @@ model Listing {
   ownerId      Int           @map("owner_id")
   owner        User          @relation(fields: [ownerId], references: [id], onDelete: Cascade)
   listingUnits ListingUnit[]
+  listingFiles ListingFile[]
   amenities    Amenity[]
   bookings     Booking[]
   reviews      Review[]
