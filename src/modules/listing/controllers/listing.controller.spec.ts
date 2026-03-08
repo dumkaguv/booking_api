@@ -50,6 +50,15 @@ describe('ListingsController', () => {
           checkOutUntil: new Date('2026-03-09T11:00:00.000Z'),
           instantBook: true,
           amenities: [{ id: 1, code: 'WIFI', name: 'Wi-Fi' }],
+          listingUnits: [
+            {
+              id: 5,
+              name: 'A1',
+              capacity: 2,
+              isActive: true,
+              listingId: 1
+            }
+          ],
           owner: {
             id: 7,
             username: 'owner',
@@ -73,10 +82,15 @@ describe('ListingsController', () => {
         id: 7,
         username: 'owner',
         email: 'owner@mail.com'
-      }
+      },
+      listingUnits: [{ id: 5, name: 'A1' }]
     })
     expect(
       (result.data[0].owner as unknown as Record<string, unknown>).password
+    ).toBeUndefined()
+    expect(
+      (result.data[0].listingUnits[0] as unknown as Record<string, unknown>)
+        .listingId
     ).toBeUndefined()
   })
 
@@ -95,6 +109,15 @@ describe('ListingsController', () => {
       checkOutUntil: new Date('2026-03-09T11:00:00.000Z'),
       instantBook: false,
       amenities: [{ id: 2, code: 'PARKING', name: 'Parking' }],
+      listingUnits: [
+        {
+          id: 11,
+          name: 'Room 101',
+          capacity: 2,
+          isActive: true,
+          listingId: 3
+        }
+      ],
       owner: {
         id: 10,
         username: 'host',
@@ -110,11 +133,15 @@ describe('ListingsController', () => {
     expect(result).toMatchObject({
       id: 3,
       title: 'Villa',
-      owner: { id: 10, username: 'host', email: 'host@mail.com' }
+      owner: { id: 10, username: 'host', email: 'host@mail.com' },
+      listingUnits: [{ id: 11, name: 'Room 101' }]
     })
     expect((result.owner as unknown as Record<string, unknown>).password).toBe(
       undefined
     )
+    expect(
+      (result.listingUnits[0] as unknown as Record<string, unknown>).listingId
+    ).toBeUndefined()
   })
 
   it('create uses current user as owner and delegates payload', async () => {
@@ -140,7 +167,8 @@ describe('ListingsController', () => {
       amenities: [
         { id: 1, code: 'WIFI', name: 'Wi-Fi' },
         { id: 2, code: 'PARKING', name: 'Parking' }
-      ]
+      ],
+      listingUnits: []
     })
 
     const result = await controller.create(req, dto)

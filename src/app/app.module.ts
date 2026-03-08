@@ -9,9 +9,12 @@ import { ResponseInterceptor } from '@/common/interceptors'
 
 import { AmenitiesModule } from '@/modules/amenity/amenity.module'
 import { AuthModule } from '@/modules/auth/auth.module'
+import { BookingsModule } from '@/modules/booking/booking.module'
 import { ListingsModule } from '@/modules/listing/listing.module'
 import { ProfilesModule } from '@/modules/profile/profile.module'
+import { ReviewsModule } from '@/modules/review/review.module'
 import { TokensModule } from '@/modules/token/token.module'
+import { UnitCalendarDaysModule } from '@/modules/unit-calendar-day/unit-calendar-day.module'
 import { UploadsModule } from '@/modules/upload/upload.module'
 import { UsersModule } from '@/modules/user/user.module'
 import { PrismaModule } from '@/prisma/prisma.module'
@@ -33,9 +36,12 @@ import { AppController } from './app.controller'
     ]),
     AmenitiesModule,
     AuthModule,
+    BookingsModule,
     TokensModule,
     UsersModule,
     ProfilesModule,
+    ReviewsModule,
+    UnitCalendarDaysModule,
     UploadsModule,
     ListingsModule
   ],

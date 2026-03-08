@@ -55,9 +55,11 @@ describe('ListingUnitsController', () => {
     expect(result.data[0]).toBeInstanceOf(ResponseListingUnitDto)
     expect(result.data[0]).toMatchObject({
       id: 1,
-      name: 'Apartment A1',
-      listingId: 7
+      name: 'Apartment A1'
     })
+    expect(
+      (result.data[0] as unknown as Record<string, unknown>).listingId
+    ).toBeUndefined()
   })
 
   it('findOne delegates to service and maps response to DTO', async () => {
@@ -77,9 +79,11 @@ describe('ListingUnitsController', () => {
     expect(result).toBeInstanceOf(ResponseListingUnitDto)
     expect(result).toMatchObject({
       id: 5,
-      name: 'Room 101',
-      listingId: 3
+      name: 'Room 101'
     })
+    expect(
+      (result as unknown as Record<string, unknown>).listingId
+    ).toBeUndefined()
   })
 
   it('create uses current user as owner and delegates payload', async () => {
@@ -102,9 +106,11 @@ describe('ListingUnitsController', () => {
     expect(result).toBeInstanceOf(ResponseListingUnitDto)
     expect(result).toMatchObject({
       id: 12,
-      name: 'Garden Studio',
-      listingId: 4
+      name: 'Garden Studio'
     })
+    expect(
+      (result as unknown as Record<string, unknown>).listingId
+    ).toBeUndefined()
   })
 
   it('update delegates to service with listing id, unit id and current user', async () => {
@@ -125,9 +131,11 @@ describe('ListingUnitsController', () => {
     expect(result).toBeInstanceOf(ResponseListingUnitDto)
     expect(result).toMatchObject({
       id: 12,
-      listingId: 4,
       isActive: true
     })
+    expect(
+      (result as unknown as Record<string, unknown>).listingId
+    ).toBeUndefined()
   })
 
   it('remove delegates to service with listing id, unit id and current user', async () => {

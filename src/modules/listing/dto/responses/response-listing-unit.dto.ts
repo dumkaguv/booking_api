@@ -19,10 +19,6 @@ export class ResponseListingUnitDto {
   @Expose()
   isActive: boolean
 
-  @ApiProperty({ type: 'integer' })
-  @Expose()
-  listingId: number
-
   @ApiProperty({ type: 'string', format: 'date-time', readOnly: true })
   @Expose()
   readonly createdAt: Date

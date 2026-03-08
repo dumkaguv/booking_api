@@ -1,6 +1,7 @@
 import { ListingTypeEnum } from '@prisma/client'
 
 import { paginate } from '@/common/utils'
+import { includeListingWithRelations } from '@/modules/listing/constants'
 import { PrismaService } from '@/prisma/prisma.service'
 
 import { ListingsService } from './listing.service'
@@ -62,12 +63,12 @@ describe('ListingsService', () => {
     expect(paginateMock).toHaveBeenCalledWith({
       prisma,
       model: 'listing',
-      include: { owner: true, amenities: true },
+      include: includeListingWithRelations,
       ...query
     })
   })
 
-  it('findOne calls prisma with include owner and amenities relations', async () => {
+  it('findOne calls prisma with include owner, amenities and listingUnits relations', async () => {
     const expected = { id: 1 }
 
     prisma.listing.findUniqueOrThrow.mockResolvedValueOnce(expected)
@@ -77,7 +78,7 @@ describe('ListingsService', () => {
     expect(result).toBe(expected)
     expect(prisma.listing.findUniqueOrThrow).toHaveBeenCalledWith({
       where: { id: 1 },
-      include: { owner: true, amenities: true }
+      include: includeListingWithRelations
     })
   })
 
@@ -112,7 +113,7 @@ describe('ListingsService', () => {
           connect: [{ id: 1 }, { id: 2 }]
         }
       }),
-      include: { owner: true, amenities: true }
+      include: includeListingWithRelations
     })
   })
 
@@ -141,7 +142,7 @@ describe('ListingsService', () => {
           set: [{ id: 3 }, { id: 5 }]
         }
       },
-      include: { owner: true, amenities: true }
+      include: includeListingWithRelations
     })
   })
 
@@ -158,7 +159,7 @@ describe('ListingsService', () => {
       data: {
         title: 'Only title'
       },
-      include: { owner: true, amenities: true }
+      include: includeListingWithRelations
     })
   })
 
@@ -177,7 +178,7 @@ describe('ListingsService', () => {
           set: []
         }
       },
-      include: { owner: true, amenities: true }
+      include: includeListingWithRelations
     })
   })
 

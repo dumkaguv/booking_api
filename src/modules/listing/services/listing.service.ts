@@ -2,14 +2,10 @@ import { Injectable } from '@nestjs/common'
 
 import { FindAllQueryDto } from '@/common/dtos'
 import { normalizeDateTime, paginate } from '@/common/utils'
+import { includeListingWithRelations } from '@/modules/listing/constants'
 import { PrismaService } from '@/prisma/prisma.service'
 
 import { CreateListingDto, ResponseListingDto, UpdateListingDto } from '../dto'
-
-const includeListingWithRelations = {
-  owner: true,
-  amenities: true
-} as const
 
 @Injectable()
 export class ListingsService {

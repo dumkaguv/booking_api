@@ -23,7 +23,9 @@ const toUtcDate = (value: Date) =>
 
 const addOneUtcDay = (value: Date) => {
   const result = new Date(value)
+
   result.setUTCDate(result.getUTCDate() + 1)
+
   return result
 }
 

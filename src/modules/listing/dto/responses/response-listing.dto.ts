@@ -5,6 +5,8 @@ import { Exclude, Expose, Type } from 'class-transformer'
 import { ResponseAmenityDto } from '@/modules/amenity/dto'
 import { ResponseUserNoProfileDto } from '@/modules/user/dto'
 
+import { ResponseListingUnitDto } from './response-listing-unit.dto'
+
 @Exclude()
 export class ResponseListingDto {
   @ApiProperty({ type: 'integer', readOnly: true })
@@ -81,6 +83,14 @@ export class ResponseListingDto {
   @Type(() => ResponseAmenityDto)
   @Expose()
   amenities: ResponseAmenityDto[]
+
+  @ApiProperty({
+    type: () => ResponseListingUnitDto,
+    isArray: true
+  })
+  @Type(() => ResponseListingUnitDto)
+  @Expose()
+  listingUnits: ResponseListingUnitDto[]
 
   @ApiProperty({
     type: () => ResponseUserNoProfileDto
