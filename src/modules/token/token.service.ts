@@ -4,6 +4,7 @@ import { ConfigService } from '@nestjs/config'
 
 import { JwtService } from '@nestjs/jwt'
 
+import { ENV_KEYS } from '@/common/constants'
 import { JwtPayload } from '@/common/types'
 import { UsersService } from '@/modules/user/user.service'
 import { PrismaService } from '@/prisma/prisma.service'
@@ -21,15 +22,17 @@ export class TokensService {
     private readonly jwtService: JwtService,
     private readonly userService: UsersService
   ) {
-    this.JWT_REFRESH_SECRET =
-      configService.getOrThrow<string>('JWT_REFRESH_SECRET')
-    this.JWT_ACCESS_SECRET =
-      configService.getOrThrow<string>('JWT_ACCESS_SECRET')
+    this.JWT_REFRESH_SECRET = configService.getOrThrow<string>(
+      ENV_KEYS.JWT_REFRESH_SECRET
+    )
+    this.JWT_ACCESS_SECRET = configService.getOrThrow<string>(
+      ENV_KEYS.JWT_ACCESS_SECRET
+    )
     this.JWT_REFRESH_TTL = configService.getOrThrow<string>(
-      'JWT_REFRESH_TOKEN_TTL'
+      ENV_KEYS.JWT_REFRESH_TOKEN_TTL
     )
     this.JWT_ACCESS_TTL = configService.getOrThrow<string>(
-      'JWT_ACCESS_TOKEN_TTL'
+      ENV_KEYS.JWT_ACCESS_TOKEN_TTL
     )
   }
 

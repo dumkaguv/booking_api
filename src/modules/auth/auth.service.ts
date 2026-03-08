@@ -2,6 +2,7 @@ import { Injectable, UnauthorizedException } from '@nestjs/common'
 import { ConfigService } from '@nestjs/config'
 import ms, { type StringValue } from 'ms'
 
+import { ENV_KEYS } from '@/common/constants'
 import { isDev } from '@/common/utils'
 import { TokensService } from '@/modules/token/token.service'
 
@@ -24,9 +25,9 @@ export class AuthService {
     private readonly tokenService: TokensService
   ) {
     this.JWT_REFRESH_TTL = configService.getOrThrow<string>(
-      'JWT_REFRESH_TOKEN_TTL'
+      ENV_KEYS.JWT_REFRESH_TOKEN_TTL
     )
-    this.FRONT_URL = configService.getOrThrow<string>('FRONT_URL')
+    this.FRONT_URL = configService.getOrThrow<string>(ENV_KEYS.FRONT_URL)
     this.REFRESH_TOKEN_COOKIE_NAME = 'refreshToken'
   }
 

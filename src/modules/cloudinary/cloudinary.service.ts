@@ -7,6 +7,7 @@ import {
 } from 'cloudinary'
 import streamifier from 'streamifier'
 
+import { ENV_KEYS } from '@/common/constants'
 import type { UploadFile } from '@/common/types'
 
 @Injectable()
@@ -16,10 +17,14 @@ export class CloudinaryService {
   constructor(private readonly configService: ConfigService) {
     cloudinary.config({
       cloud_name: this.configService.getOrThrow<string>(
-        'CLOUDINARY_CLOUD_NAME'
+        ENV_KEYS.CLOUDINARY_CLOUD_NAME
       ),
-      api_key: this.configService.getOrThrow<string>('CLOUDINARY_API_KEY'),
-      api_secret: this.configService.getOrThrow<string>('CLOUDINARY_API_SECRET')
+      api_key: this.configService.getOrThrow<string>(
+        ENV_KEYS.CLOUDINARY_API_KEY
+      ),
+      api_secret: this.configService.getOrThrow<string>(
+        ENV_KEYS.CLOUDINARY_API_SECRET
+      )
     })
   }
 

@@ -4,13 +4,15 @@ import { PrismaPg } from '@prisma/adapter-pg'
 import { PrismaClient } from '@prisma/client'
 import { Pool } from 'pg'
 
+import { ENV_KEYS } from '@/common/constants'
+
 @Injectable()
 export class PrismaService
   extends PrismaClient
   implements OnModuleInit, OnModuleDestroy
 {
   constructor(config: ConfigService) {
-    const databaseUrl = config.getOrThrow<string>('DATABASE_URL')
+    const databaseUrl = config.getOrThrow<string>(ENV_KEYS.DATABASE_URL)
     const pool = new Pool({ connectionString: databaseUrl })
 
     super({ adapter: new PrismaPg(pool) })

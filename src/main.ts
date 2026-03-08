@@ -12,7 +12,15 @@ import { Request, Response } from 'express'
 import helmet from 'helmet'
 
 import { AppModule } from './app/app.module'
-import { API_GLOBAL_PREFIX } from './common/constants'
+import {
+  ALLOWED_HEADERS,
+  ALLOWED_METHODS,
+  API_GLOBAL_PREFIX,
+  DEFAULT_APPLICATION_VERSION,
+  DEFAULT_PORT,
+  ENV_KEYS,
+  ROOT_PATH
+} from './common/constants'
 import { AllExceptionsFilter } from './common/filters'
 import { ResponseInterceptor } from './common/interceptors'
 import { setupSwagger } from './common/utils'
@@ -25,7 +33,7 @@ async function bootstrap() {
 
   app.enableVersioning({
     type: VersioningType.URI,
-    defaultVersion: '1'
+    defaultVersion: DEFAULT_APPLICATION_VERSION
   })
 
   app.useGlobalInterceptors(app.get(ResponseInterceptor))
@@ -43,18 +51,13 @@ async function bootstrap() {
     })
   )
 
-  app.use(
-    compression({
-      threshold: 1024,
-      level: 6
-    })
-  )
+  app.use(compression())
 
   app.enableCors({
-    origin: config.getOrThrow<string>('FRONT_URL'),
+    origin: config.getOrThrow<string>(ENV_KEYS.FRONT_URL),
     credentials: true,
-    methods: ['GET', 'POST', 'PATCH', 'PUT', 'DELETE'],
-    allowedHeaders: ['Content-Type', 'Authorization']
+    methods: ALLOWED_METHODS,
+    allowedHeaders: ALLOWED_HEADERS
   })
 
   app.useGlobalInterceptors(
@@ -73,14 +76,14 @@ async function bootstrap() {
 
   app
     .getHttpAdapter()
-    .get('/', (_req: Request, res: Response) =>
-      res.redirect(`/${API_GLOBAL_PREFIX}`)
+    .get(ROOT_PATH, (_req: Request, res: Response) =>
+      res.redirect(`${ROOT_PATH}${API_GLOBAL_PREFIX}`)
     )
 
-  await app.listen(config.get<string>('PORT') ?? 3000)
+  await app.listen(config.get<string>(ENV_KEYS.PORT) ?? DEFAULT_PORT)
 
   console.warn(
-    `Server started on url http://localhost:${config.get<string>('PORT') ?? 3000}`
+    `Server started on url http://localhost:${config.get<string>(ENV_KEYS.PORT) ?? DEFAULT_PORT}`
   )
 }
 
