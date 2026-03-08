@@ -62,12 +62,12 @@ describe('ListingsService', () => {
     expect(paginateMock).toHaveBeenCalledWith({
       prisma,
       model: 'listing',
-      include: { owner: true },
+      include: { owner: true, amenities: true },
       ...query
     })
   })
 
-  it('findOne calls prisma with include owner relation', async () => {
+  it('findOne calls prisma with include owner and amenities relations', async () => {
     const expected = { id: 1 }
 
     prisma.listing.findUniqueOrThrow.mockResolvedValueOnce(expected)
@@ -77,11 +77,11 @@ describe('ListingsService', () => {
     expect(result).toBe(expected)
     expect(prisma.listing.findUniqueOrThrow).toHaveBeenCalledWith({
       where: { id: 1 },
-      include: { owner: true }
+      include: { owner: true, amenities: true }
     })
   })
 
-  it('create normalizes dates and stores listing with owner', async () => {
+  it('create normalizes dates and stores listing with owner and amenities', async () => {
     const dto = {
       title: 'Loft',
       type: ListingTypeEnum.APARTMENT,
@@ -93,7 +93,8 @@ describe('ListingsService', () => {
       maxGuests: 2,
       checkInFrom: '2026-03-08',
       checkOutUntil: '2026-03-09',
-      instantBook: true
+      instantBook: true,
+      amenityIds: [1, 2]
     }
 
     prisma.listing.create.mockResolvedValueOnce({ id: 9, ...dto })
@@ -106,20 +107,24 @@ describe('ListingsService', () => {
         ownerId: 7,
         title: 'Loft',
         checkInFrom: new Date('2026-03-08T00:00:00.000Z'),
-        checkOutUntil: new Date('2026-03-09T00:00:00.000Z')
+        checkOutUntil: new Date('2026-03-09T00:00:00.000Z'),
+        amenities: {
+          connect: [{ id: 1 }, { id: 2 }]
+        }
       }),
-      include: { owner: true }
+      include: { owner: true, amenities: true }
     })
   })
 
-  it('update checks ownership and normalizes provided dates', async () => {
+  it('update checks ownership, normalizes provided dates and updates amenities', async () => {
     prisma.listing.findFirstOrThrow.mockResolvedValueOnce({ id: 5 })
     prisma.listing.update.mockResolvedValueOnce({ id: 5 })
 
     await service.update(5, 3, {
       title: 'Updated',
       checkInFrom: '2026-03-10',
-      checkOutUntil: '2026-03-12'
+      checkOutUntil: '2026-03-12',
+      amenityIds: [3, 5]
     })
 
     expect(prisma.listing.findFirstOrThrow).toHaveBeenCalledWith({
@@ -131,9 +136,12 @@ describe('ListingsService', () => {
       data: {
         title: 'Updated',
         checkInFrom: new Date('2026-03-10T00:00:00.000Z'),
-        checkOutUntil: new Date('2026-03-12T00:00:00.000Z')
+        checkOutUntil: new Date('2026-03-12T00:00:00.000Z'),
+        amenities: {
+          set: [{ id: 3 }, { id: 5 }]
+        }
       },
-      include: { owner: true }
+      include: { owner: true, amenities: true }
     })
   })
 
@@ -150,7 +158,26 @@ describe('ListingsService', () => {
       data: {
         title: 'Only title'
       },
-      include: { owner: true }
+      include: { owner: true, amenities: true }
+    })
+  })
+
+  it('update can clear amenities when empty amenityIds are provided', async () => {
+    prisma.listing.findFirstOrThrow.mockResolvedValueOnce({ id: 11 })
+    prisma.listing.update.mockResolvedValueOnce({ id: 11 })
+
+    await service.update(11, 4, {
+      amenityIds: []
+    })
+
+    expect(prisma.listing.update).toHaveBeenCalledWith({
+      where: { id: 11 },
+      data: {
+        amenities: {
+          set: []
+        }
+      },
+      include: { owner: true, amenities: true }
     })
   })
 

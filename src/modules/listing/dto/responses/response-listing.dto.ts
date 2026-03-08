@@ -2,6 +2,7 @@ import { ApiProperty } from '@nestjs/swagger'
 import { ListingStatusEnum, ListingTypeEnum } from '@prisma/client'
 import { Exclude, Expose, Type } from 'class-transformer'
 
+import { ResponseAmenityDto } from '@/modules/amenity/dto'
 import { ResponseUserNoProfileDto } from '@/modules/user/dto'
 
 @Exclude()
@@ -72,6 +73,14 @@ export class ResponseListingDto {
   @ApiProperty({ type: 'boolean' })
   @Expose()
   instantBook: boolean
+
+  @ApiProperty({
+    type: () => ResponseAmenityDto,
+    isArray: true
+  })
+  @Type(() => ResponseAmenityDto)
+  @Expose()
+  amenities: ResponseAmenityDto[]
 
   @ApiProperty({
     type: () => ResponseUserNoProfileDto

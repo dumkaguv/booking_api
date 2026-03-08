@@ -7,7 +7,8 @@ import { PrismaService } from '@/prisma/prisma.service'
 import { CreateListingDto, ResponseListingDto, UpdateListingDto } from './dto'
 
 const includeListingWithRelations = {
-  owner: true
+  owner: true,
+  amenities: true
 } as const
 
 @Injectable()
@@ -31,7 +32,7 @@ export class ListingsService {
   }
 
   public create(ownerId: number, dto: CreateListingDto) {
-    const { checkInFrom, checkOutUntil, ...rest } = dto
+    const { amenityIds, checkInFrom, checkOutUntil, ...rest } = dto
     const normalizedCheckInFrom = normalizeDateTime(checkInFrom) as Date
     const normalizedCheckOutUntil = normalizeDateTime(checkOutUntil) as Date
 
@@ -40,7 +41,14 @@ export class ListingsService {
         ...rest,
         ownerId,
         checkInFrom: normalizedCheckInFrom,
-        checkOutUntil: normalizedCheckOutUntil
+        checkOutUntil: normalizedCheckOutUntil,
+        ...(amenityIds === undefined
+          ? {}
+          : {
+              amenities: {
+                connect: amenityIds.map((amenityId) => ({ id: amenityId }))
+              }
+            })
       },
       include: includeListingWithRelations
     })
@@ -49,7 +57,7 @@ export class ListingsService {
   public async update(id: number, ownerId: number, dto: UpdateListingDto) {
     await this.ensureOwnership(id, ownerId)
 
-    const { checkInFrom, checkOutUntil, ...rest } = dto
+    const { amenityIds, checkInFrom, checkOutUntil, ...rest } = dto
     const normalizedCheckInFrom =
       checkInFrom === undefined
         ? undefined
@@ -68,7 +76,14 @@ export class ListingsService {
           : { checkInFrom: normalizedCheckInFrom }),
         ...(normalizedCheckOutUntil === undefined
           ? {}
-          : { checkOutUntil: normalizedCheckOutUntil })
+          : { checkOutUntil: normalizedCheckOutUntil }),
+        ...(amenityIds === undefined
+          ? {}
+          : {
+              amenities: {
+                set: amenityIds.map((amenityId) => ({ id: amenityId }))
+              }
+            })
       },
       include: includeListingWithRelations
     })

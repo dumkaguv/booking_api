@@ -49,6 +49,7 @@ describe('ListingsController', () => {
           checkInFrom: new Date('2026-03-08T14:00:00.000Z'),
           checkOutUntil: new Date('2026-03-09T11:00:00.000Z'),
           instantBook: true,
+          amenities: [{ id: 1, code: 'WIFI', name: 'Wi-Fi' }],
           owner: {
             id: 7,
             username: 'owner',
@@ -93,6 +94,7 @@ describe('ListingsController', () => {
       checkInFrom: new Date('2026-03-08T14:00:00.000Z'),
       checkOutUntil: new Date('2026-03-09T11:00:00.000Z'),
       instantBook: false,
+      amenities: [{ id: 2, code: 'PARKING', name: 'Parking' }],
       owner: {
         id: 10,
         username: 'host',
@@ -128,10 +130,18 @@ describe('ListingsController', () => {
       maxGuests: 3,
       checkInFrom: '2026-03-08T14:00:00.000Z',
       checkOutUntil: '2026-03-09T11:00:00.000Z',
-      instantBook: true
+      instantBook: true,
+      amenityIds: [1, 2]
     }
 
-    service.create.mockResolvedValueOnce({ id: 77, ...dto })
+    service.create.mockResolvedValueOnce({
+      id: 77,
+      ...dto,
+      amenities: [
+        { id: 1, code: 'WIFI', name: 'Wi-Fi' },
+        { id: 2, code: 'PARKING', name: 'Parking' }
+      ]
+    })
 
     const result = await controller.create(req, dto)
 
@@ -147,6 +157,7 @@ describe('ListingsController', () => {
     service.update.mockResolvedValueOnce({
       id: 9,
       title: 'Updated title',
+      amenities: [{ id: 3, code: 'KITCHEN', name: 'Kitchen' }],
       owner: { id: 5, username: 'u', email: 'u@mail.com' }
     })
 

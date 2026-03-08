@@ -1,6 +1,8 @@
 import { ApiProperty } from '@nestjs/swagger'
 import { ListingStatusEnum, ListingTypeEnum } from '@prisma/client'
 import {
+  ArrayUnique,
+  IsArray,
   IsBoolean,
   IsDateString,
   IsDecimal,
@@ -105,4 +107,17 @@ export class CreateListingDto {
   @ApiProperty({ type: 'boolean' })
   @IsBoolean()
   instantBook: boolean
+
+  @ApiProperty({
+    type: 'array',
+    items: { type: 'integer' },
+    required: false,
+    description: 'Amenity IDs to attach to the listing'
+  })
+  @IsOptional()
+  @IsArray()
+  @ArrayUnique()
+  @IsInt({ each: true })
+  @Min(1, { each: true })
+  amenityIds?: number[]
 }
