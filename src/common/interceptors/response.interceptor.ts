@@ -11,7 +11,7 @@ import {
   DEFAULT_PAGE,
   DEFAULT_PAGE_SIZE,
   MAX_PAGE_SIZE
-} from 'src/common/constants'
+} from '@/common/constants'
 
 import type { Request } from 'express'
 
