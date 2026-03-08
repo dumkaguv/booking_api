@@ -7,6 +7,7 @@ import { seconds, ThrottlerGuard, ThrottlerModule } from '@nestjs/throttler'
 import { AllExceptionsFilter } from '@/common/filters'
 import { ResponseInterceptor } from '@/common/interceptors'
 
+import { AmenitiesModule } from '@/modules/amenity/amenity.module'
 import { AuthModule } from '@/modules/auth/auth.module'
 import { ListingsModule } from '@/modules/listing/listing.module'
 import { ProfilesModule } from '@/modules/profile/profile.module'
@@ -30,6 +31,7 @@ import { AppController } from './app.controller'
         limit: 100
       }
     ]),
+    AmenitiesModule,
     AuthModule,
     TokensModule,
     UsersModule,
