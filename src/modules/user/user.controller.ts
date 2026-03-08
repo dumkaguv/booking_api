@@ -7,6 +7,7 @@ import {
   HttpCode,
   HttpStatus,
   Param,
+  ParseIntPipe,
   Patch,
   Query,
   Req
@@ -43,8 +44,8 @@ export class UsersController {
 
   @Get(':id')
   @ApiOkResponseWrapped(ResponseUserDto)
-  public findOne(@Param('id') id: string) {
-    return sendResponse(ResponseUserDto, this.userService.findOne(+id))
+  public findOne(@Param('id', ParseIntPipe) id: number) {
+    return sendResponse(ResponseUserDto, this.userService.findOne(id))
   }
 
   @Patch(':id')

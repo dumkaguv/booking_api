@@ -8,6 +8,7 @@ import { AllExceptionsFilter } from '@/common/filters'
 import { ResponseInterceptor } from '@/common/interceptors'
 
 import { AuthModule } from '@/modules/auth/auth.module'
+import { ListingsModule } from '@/modules/listing/listing.module'
 import { ProfilesModule } from '@/modules/profile/profile.module'
 import { TokensModule } from '@/modules/token/token.module'
 import { UploadsModule } from '@/modules/upload/upload.module'
@@ -33,7 +34,8 @@ import { AppController } from './app.controller'
     TokensModule,
     UsersModule,
     ProfilesModule,
-    UploadsModule
+    UploadsModule,
+    ListingsModule
   ],
   controllers: [AppController],
   providers: [

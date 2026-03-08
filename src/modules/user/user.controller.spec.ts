@@ -64,7 +64,7 @@ describe('UsersController', () => {
     ).toBeUndefined()
   })
 
-  it('findOne parses id and delegates to service', async () => {
+  it('findOne delegates to service and wraps response', async () => {
     service.findOne.mockResolvedValueOnce({
       id: 4,
       username: 'mike',
@@ -72,7 +72,7 @@ describe('UsersController', () => {
       password: 'hidden'
     })
 
-    const result = await controller.findOne('4')
+    const result = await controller.findOne(4)
 
     expect(service.findOne).toHaveBeenCalledWith(4)
     expect(result).toBeInstanceOf(ResponseUserDto)
