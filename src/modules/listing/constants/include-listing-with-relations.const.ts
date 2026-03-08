@@ -1,5 +1,4 @@
 export const includeListingWithRelations = {
   owner: true,
-  amenities: true,
-  listingUnits: true
+  amenities: true
 } as const

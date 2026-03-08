@@ -90,11 +90,19 @@ describe('BookingsController', () => {
     expect(result.data[0]).toBeInstanceOf(ResponseBookingDto)
     expect(result.data[0]).toMatchObject({
       id: 1,
-      guestId: 7,
       status: BookingStatusEnum.PENDING,
       unit: { id: 3 },
       guest: { id: 7, username: 'guest' }
     })
+    expect(
+      result.data[0] as unknown as Record<string, unknown>
+    ).not.toHaveProperty('unitId')
+    expect(
+      result.data[0] as unknown as Record<string, unknown>
+    ).not.toHaveProperty('guestId')
+    expect(
+      result.data[0] as unknown as Record<string, unknown>
+    ).not.toHaveProperty('listingId')
     expect(
       (result.data[0].guest as unknown as Record<string, unknown>).password
     ).toBeUndefined()
@@ -208,11 +216,19 @@ describe('BookingsController', () => {
     expect(result).toBeInstanceOf(ResponseBookingDto)
     expect(result).toMatchObject({
       id: 21,
-      guestId: 11,
       status: BookingStatusEnum.PENDING,
       unit: { id: 4 },
       listing: { id: 3 }
     })
+    expect(result as unknown as Record<string, unknown>).not.toHaveProperty(
+      'unitId'
+    )
+    expect(result as unknown as Record<string, unknown>).not.toHaveProperty(
+      'guestId'
+    )
+    expect(result as unknown as Record<string, unknown>).not.toHaveProperty(
+      'listingId'
+    )
   })
 
   it('update delegates to service with booking id and current user', async () => {

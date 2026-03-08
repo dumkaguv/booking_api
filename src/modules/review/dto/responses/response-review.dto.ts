@@ -2,7 +2,6 @@ import { ApiProperty } from '@nestjs/swagger'
 import { Exclude, Expose, Type } from 'class-transformer'
 
 import { ResponseBookingDto } from '@/modules/booking/dto'
-import { ResponseListingDto } from '@/modules/listing/dto'
 import { ResponseUserNoProfileDto } from '@/modules/user/dto'
 
 @Exclude()
@@ -15,11 +14,6 @@ export class ResponseReviewDto {
   @Type(() => ResponseBookingDto)
   @Expose()
   booking: ResponseBookingDto
-
-  @ApiProperty({ type: () => ResponseListingDto })
-  @Type(() => ResponseListingDto)
-  @Expose()
-  listing: ResponseListingDto
 
   @ApiProperty({ type: () => ResponseUserNoProfileDto })
   @Type(() => ResponseUserNoProfileDto)

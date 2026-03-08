@@ -32,6 +32,7 @@ export class ResponseUnitCalendarDayDto {
     nullable: true,
     description: 'Decimal value as string'
   })
+  @Type(() => String)
   @Expose()
   priceOverride?: string | null
 

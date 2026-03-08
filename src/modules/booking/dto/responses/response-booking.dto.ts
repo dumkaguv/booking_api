@@ -14,14 +14,6 @@ export class ResponseBookingDto {
   @Expose()
   readonly id: number
 
-  @ApiProperty({ type: 'integer' })
-  @Expose()
-  unitId: number
-
-  @ApiProperty({ type: 'integer' })
-  @Expose()
-  guestId: number
-
   @ApiProperty({ type: () => ResponseListingUnitDto })
   @Type(() => ResponseListingUnitDto)
   @Expose()
@@ -31,14 +23,6 @@ export class ResponseBookingDto {
   @Type(() => ResponseUserNoProfileDto)
   @Expose()
   guest: ResponseUserNoProfileDto
-
-  @ApiProperty({
-    type: 'integer',
-    required: false,
-    nullable: true
-  })
-  @Expose()
-  listingId?: number | null
 
   @ApiProperty({
     type: () => ResponseListingDto,
@@ -78,6 +62,7 @@ export class ResponseBookingDto {
     type: 'string',
     description: 'Decimal value as string'
   })
+  @Type(() => String)
   @Expose()
   totalAmount: string
 

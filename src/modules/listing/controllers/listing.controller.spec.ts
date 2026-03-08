@@ -82,16 +82,14 @@ describe('ListingsController', () => {
         id: 7,
         username: 'owner',
         email: 'owner@mail.com'
-      },
-      listingUnits: [{ id: 5, name: 'A1' }]
+      }
     })
     expect(
       (result.data[0].owner as unknown as Record<string, unknown>).password
     ).toBeUndefined()
     expect(
-      (result.data[0].listingUnits[0] as unknown as Record<string, unknown>)
-        .listingId
-    ).toBeUndefined()
+      result.data[0] as unknown as Record<string, unknown>
+    ).not.toHaveProperty('listingUnits')
   })
 
   it('findOne delegates to service and maps response to DTO', async () => {
@@ -133,15 +131,14 @@ describe('ListingsController', () => {
     expect(result).toMatchObject({
       id: 3,
       title: 'Villa',
-      owner: { id: 10, username: 'host', email: 'host@mail.com' },
-      listingUnits: [{ id: 11, name: 'Room 101' }]
+      owner: { id: 10, username: 'host', email: 'host@mail.com' }
     })
     expect((result.owner as unknown as Record<string, unknown>).password).toBe(
       undefined
     )
-    expect(
-      (result.listingUnits[0] as unknown as Record<string, unknown>).listingId
-    ).toBeUndefined()
+    expect(result as unknown as Record<string, unknown>).not.toHaveProperty(
+      'listingUnits'
+    )
   })
 
   it('create uses current user as owner and delegates payload', async () => {
