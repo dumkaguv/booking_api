@@ -21,8 +21,8 @@ import type { AuthRequest } from '@/common/types'
 import { sendPaginatedResponse, sendResponse } from '@/common/utils'
 import { Authorization } from '@/modules/auth/decorators'
 
-import { CreateListingDto, ResponseListingDto, UpdateListingDto } from './dto'
-import { ListingsService } from './listing.service'
+import { CreateListingDto, ResponseListingDto, UpdateListingDto } from '../dto'
+import { ListingsService } from '../services'
 
 @Controller('listings')
 @Authorization()

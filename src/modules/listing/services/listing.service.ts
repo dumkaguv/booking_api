@@ -4,7 +4,7 @@ import { FindAllQueryDto } from '@/common/dtos'
 import { normalizeDateTime, paginate } from '@/common/utils'
 import { PrismaService } from '@/prisma/prisma.service'
 
-import { CreateListingDto, ResponseListingDto, UpdateListingDto } from './dto'
+import { CreateListingDto, ResponseListingDto, UpdateListingDto } from '../dto'
 
 const includeListingWithRelations = {
   owner: true,

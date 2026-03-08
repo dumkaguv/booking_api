@@ -2,9 +2,9 @@ import { ListingTypeEnum } from '@prisma/client'
 
 import type { AuthRequest } from '@/common/types'
 
-import { ResponseListingDto } from './dto'
+import { ResponseListingDto } from '../dto'
 import { ListingsController } from './listing.controller'
-import { ListingsService } from './listing.service'
+import { ListingsService } from '../services'
 
 type ListingServiceMock = {
   create: jest.Mock
